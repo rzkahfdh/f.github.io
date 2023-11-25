@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tampilan Mahasiswa</title>
+  <style>
+    body {
+      background-image: url('background.jpg');
+      background-size: cover;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .popup {
+      background-color: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      text-align: center;
+      margin-bottom: 20px; /* Tambahkan margin bawah agar tampilan lebih rapi */
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    input {
+      margin-bottom: 10px;
+    }
+
+    button {
+      margin: 5px;
+      padding: 8px 16px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    /* Gaya tambahan untuk menata elemen secara vertikal */
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      margin-bottom: 15px;
+    }
+
+    label {
+      margin-bottom: 5px;
+      text-align: left;
+    }
+  </style>
+</head>
+<body>
+  <div id="home" class="popup">
+    <h2>Selamat datang di Aplikasi Mahasiswa</h2>
+    <button onclick="showDataMahasiswa()">Data Mahasiswa</button>
+    <button onclick="showNilaiMahasiswa()">Nilai Mahasiswa</button>
+    <button onclick="showLaporanMahasiswa()">Laporan Mahasiswa</button>
+  </div>
+
+  <div id="dataMahasiswa" class="popup hidden">
+    <h2>Data Mahasiswa</h2>
+    <div class="input-group">
+      <label for="nim">NIM:</label>
+      <input type="text" id="nim">
+    </div>
+    <div class="input-group">
+      <label for="nama">Nama:</label>
+      <input type="text" id="nama">
+    </div>
+    <div class="input-group">
+      <label for="kelas">Kelas:</label>
+      <input type="text" id="kelas">
+    </div>
+    <div class="input-group">
+      <label for="matkul">Mata Kuliah:</label>
+      <input type="text" id="matkul">
+    </div>
+    <div class="input-group">
+      <label for="tanggal">Tanggal:</label>
+      <input type="date" id="tanggal">
+    </div>
+    <br><br>
+    <button onclick="showNilaiMahasiswa()">Next</button>
+    <button onclick="hidePopup()">Home</button>
+  </div>
+
+  <div id="nilaiMahasiswa" class="popup hidden">
+    <h2>Nilai Mahasiswa</h2>
+    <div class="input-group">
+      <label for="tugas1">Nilai Tugas 1:</label>
+      <input type="text" id="tugas1">
+    </div>
+    <div class="input-group">
+      <label for="tugas2">Nilai Tugas 2:</label>
+      <input type="text" id="tugas2">
+    </div>
+    <div class="input-group">
+      <label for="uts">Nilai UTS:</label>
+      <input type="text" id="uts">
+    </div>
+    <div class="input-group">
+      <label for="uas">Nilai UAS:</label>
+      <input type="text" id="uas">
+    </div>
+    <br><br>
+    <button onclick="showHasilLaporan()">Next</button>
+    <button onclick="showDataMahasiswa()">Back</button>
+    <button onclick="hidePopup()">Home</button>
+  </div>
+
+  <div id="hasilLaporan" class="popup hidden">
+    <h2>Hasil Laporan</h2>
+    <p id="laporanText"></p>
+    <br><br>
+    <button onclick="showDataMahasiswa()">Back</button>
+    <button onclick="hidePopup()">Home</button>
+  </div>
+
+  <script>
+    function showDataMahasiswa() {
+      document.getElementById('home').classList.add('hidden');
+      document.getElementById('nilaiMahasiswa').classList.add('hidden');
+      document.getElementById('hasilLaporan').classList.add('hidden');
+      document.getElementById('dataMahasiswa').classList.remove('hidden');
+    }
+
+    function showNilaiMahasiswa() {
+      document.getElementById('home').classList.add('hidden');
+      document.getElementById('dataMahasiswa').classList.add('hidden');
+      document.getElementById('hasilLaporan').classList.add('hidden');
+      document.getElementById('nilaiMahasiswa').classList.remove('hidden');
+    }
+
+    function showLaporanMahasiswa() {
+      document.getElementById('home').classList.add('hidden');
+      document.getElementById('dataMahasiswa').classList.add('hidden');
+      document.getElementById('nilaiMahasiswa').classList.add('hidden');
+      document.getElementById('hasilLaporan').classList.remove('hidden');
+    }
+
+    function showHasilLaporan() {
+      // Mengambil nilai dari formulir data mahasiswa
+      const nim = document.getElementById('nim').value;
+      const nama = document.getElementById('nama').value;
+      const kelas = document.getElementById('kelas').value;
+      const matkul = document.getElementById('matkul').value;
+      const tanggal = document.getElementById('tanggal').value;
+
+      // Mengambil nilai dari formulir nilai mahasiswa
+      const tugas1 = document.getElementById('tugas1').value;
+      const tugas2 = document.getElementById('tugas2').value;
+      const uts = document.getElementById('uts').value;
+      const uas = document.getElementById('uas').value;
+
+      // Membuat laporan sesuai dengan data yang diambil
+      const laporanText = `
+        NIM: ${nim}
+        Nama: ${nama}
+        Kelas: ${kelas}
+        Mata Kuliah: ${matkul}
+        Tanggal: ${tanggal}
+        
+        Nilai Tugas 1: ${tugas1}
+        Nilai Tugas 2: ${tugas2}
+        Nilai UTS: ${uts}
+        Nilai UAS: ${uas}
+      `;
+
+      // Menampilkan laporan pada popup hasil laporan
+      document.getElementById('laporanText').innerText = laporanText;
+
+      document.getElementById('nilaiMahasiswa').classList.add('hidden');
+      document.getElementById('hasilLaporan').classList.remove('hidden');
+    }
+
+    function hidePopup() {
+      document.getElementById('dataMahasiswa').classList.add('hidden');
+      document.getElementById('nilaiMahasiswa').classList.add('hidden');
+      document.getElementById('hasilLaporan').classList.add('hidden');
+      document.getElementById('home').classList.remove('hidden');
+    }
+  </script>
+</body>
+</html>
